@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Chat Room</title>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>-->
+    <script src="./static/js/socket.io.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io();
+        socket.on('connect', function() {
+            socket.emit('my event', {data: 'I\'m connected!'});
+        });
+    </script>
+    <script>
+        function setVisibility(ElementId, ValueToSet) {
+          var x = document.getElementById(ElementId);
+          x.style.visibility = ValueToSet;
+        }
+    </script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
+    <script src="./static/js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="ladder2">
+        <img src="static/images/ladder2.png" width="100">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var socket = io.connect('http://127.0.0.1:5000');
+
+            socket.on('connect', function() {
+                socket.send('User has connected!');
+            });
+
+            socket.on('message', function(msg) {
+                if (msg === 'ladder2 hide') {
+                    setVisibility('ladder2', 'hidden');
+                    }
+                if (msg === 'ladder2 show') {
+                    setVisibility('ladder2', 'visible');
+                    }
+                $("#messages").append('<li>'+msg+'</li>');
+                console.log('Received message');
+            });
+
+            $('#sendbutton').on('click', function() {
+                socket.send($('#myMessage').val());
+                $('#myMessage').val('');
+            });
+
+        });
+    </script>
+    <ul id="messages"></ul>
+    <input type="text" id="myMessage">
+    <button id="sendbutton">Send</button>
+</body>
+
+</html>
