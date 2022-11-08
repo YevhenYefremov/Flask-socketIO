@@ -1,0 +1,7 @@
+eventlet==0.33.0
+flask-http2-push==0.0.3
+flask-login==0.5.0
+flask-socketio==5.1.1
+flask-sqlalchemy==2.5.1
+flask-talisman==0.8.1
+flask==2.0.1
